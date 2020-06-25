@@ -32,3 +32,29 @@
 	sudo systemctl start nagios.service
 * Test Nagios
 	your-machine-ip-address/nagios
+	
+	
+======================================================================================================================
+This would get your Nagios server up and running on port 5666, but it will not be able to monitor any metrics.
+For this you will need to follow the below step where you will install the default plugins to monitor the metrics.
+======================================================================================================================
+* Install the pre-requisites.
+	sudo apt-get install -y autoconf gcc libc6 libmcrypt-dev make libssl-dev wget bc gawk dc build-essential snmp libnet-snmp-perl gettext
+* Change directory to /tmp	
+	cd /tmp
+* Download the plugins
+	wget --no-check-certificate -O nagios-plugins.tar.gz https://github.com/nagios-plugins/nagios-plugins/archive/release-2.2.1.tar.gz
+* Untar the plugins
+	tar zxf nagios-plugins.tar.gz
+* Change directory to the plugins	
+	cd nagios-plugins-release-2.2.1/
+* Execute the setup script
+	sudo ./tools/setup
+* Compile the source
+	sudo ./configure
+* Install the binaries
+	sudo make
+	sudo make install
+* Restart nagios service
+	sudo systemctl restart nagios.service
+
