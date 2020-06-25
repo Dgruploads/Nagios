@@ -1,0 +1,65 @@
+* Install the pre-requisites.
+  sudo yum install -y autoconf gcc libc6 libmcrypt-dev make libssl-dev wget bc gawk dc build-essential snmp libnet-snmp-perl gettext
+* Change the location to the temporary directory.
+  cd /tmp
+* Download the plugins on the remote machine.
+  wget http://nagios-plugins.org/download/nagios-plugins-2.2.1.tar.gz
+* Untar the downloaded plugin. 
+  tar xzf nagios-plugins-2.2.1.tar.gz
+* Change the directory to the nagios plugin.
+  cd nagios-plugins-2.2.1
+* Run the configure script
+  ./configure
+* Compile the code
+  make
+* Install the code
+  make install
+* Creating a user "nagios"
+  useradd nagios
+* Creating a group "nagios"
+  groupadd nagios
+* Adding the user to the group.
+  usermod -a -G nagios nagios
+* Changing the ownership
+  chown nagios.nagios /usr/local/nagios
+* Changing the ownership to the plugins directory 
+  chown -R nagios.nagios /usr/local/nagios/libexec
+* Installing xinetd required by nagios
+  yum install xinetd
+* Chaning the directory to /tmp
+  cd /tmp
+* Downloading the agent
+  wget https://github.com/NagiosEnterprises/nrpe/releases/download/nrpe-4.0.2/nrpe-4.0.2.tar.gz
+* Untar the file
+  tar -xzf nrpe-4.0.2.tar.gz
+* Change directory to the directory
+  cd nrpe-nrpe-4.0.2
+* Install openssl libraries
+  yum install openssl-devel -y
+* Execute the configure script
+  ./configure
+* Compile the code
+  make all
+* Install the code  
+  make install-groups-users
+* Install the code
+  make install
+* Install the config file  
+  make install-config
+* Install the code
+  make install-inetd
+* Install the code
+  make install-init
+* Start and enable boot start
+  systemctl enable nrpe && systemctl start nrpe
+* Check the ports if they are open 
+  netstat -at | egrep "nrpe|5666"
+* Below commands can be used to check if the metrics are monitored from the local machine (Machine where nrpe is installed).
+/usr/local/nagios/libexec/check_nrpe -H localhost
+/usr/local/nagios/libexec/check_nrpe -H localhost -c check_users
+/usr/local/nagios/libexec/check_nrpe -H localhost -c check_load
+/usr/local/nagios/libexec/check_nrpe -H localhost -c check_hda1
+/usr/local/nagios/libexec/check_nrpe -H localhost -c check_total_procs
+/usr/local/nagios/libexec/check_nrpe -H localhost -c check_zombie_procs
+
+ 
