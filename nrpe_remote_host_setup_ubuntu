@@ -34,7 +34,7 @@
 * Untar the file
   tar -xzf nrpe-4.0.2.tar.gz
 * Change directory to the directory
-  cd nrpe-nrpe-4.0.2
+  cd nrpe-4.0.2
 * Execute the configure script
   ./configure
 * Compile the code
